@@ -13,6 +13,23 @@ const (
 	SEMVER   = MAIN_VER + `(\.` + MAIN_VER + `)?(\.` + MAIN_VER + `)?(-` + PRE_VER + `)?(\+` + PRE_VER + `)?`
 )
 
+type Collection []Semver
+
+func (c Collection) Len() int {
+	return len(c)
+}
+
+func (c Collection) Less(i, j int) bool {
+	if c[j].GreaterThan(c[i]) {
+		return true
+	}
+	return false
+}
+
+func (c Collection) Swap(i, j int) {
+	c[i], c[j] = c[j], c[i]
+}
+
 // Semver semantic version structure
 type Semver struct {
 	Major         string
